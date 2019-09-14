@@ -63,8 +63,8 @@ const resolvers = {
   Date: GraphQLDate,
   DateTime: GraphQLDateTime,
   Query: {
-//    contributors: (_source, {region}) => contributors.filter(contributor => region == "all" || contributor.region == region),
-    contributors: async (_source, { region },  { dataSources }, info) => dataSources.contributors.findContributors(region),
+    //    contributors: (_source, {region}) => contributors.filter(contributor => region == "all" || contributor.region == region),
+    contributors: async (_source, { region }, { dataSources }, info) => dataSources.contributors.findContributors(region),
   },
 };
 

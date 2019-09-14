@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "compile": "babel src --out-dir .compiled --source-maps --watch",
     "start": "babel-node -r node_modules/dotenv/config src/index.js",
+    "tmp": "babel-node -r node_modules/dotenv/config src/tmp.js",
     "startw": "nodemon --exec babel-node -r node_modules/dotenv/config src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.6.0",
+    "@ovotech/apollo-datasource-soap": "^4.1.0",
     "@types/debug": "^4.1.5",
     "apollo-server": "^2.9.3",
     "datasource-sql": "^0.2.0",
@@ -21,7 +24,8 @@
     "graphql": "^14.5.5",
     "graphql-iso-date": "^3.6.1",
     "knex": "^0.19.4",
-    "pg": "^7.12.1"
+    "pg": "^7.12.1",
+    "soap": "^0.29.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
