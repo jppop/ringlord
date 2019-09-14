@@ -3,6 +3,10 @@ import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date'
 
 import { ContributorRepository } from './repository/contributors'
 
+import { getLogger } from './debugger'
+
+const debug = getLogger();
+
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
 // your data.
@@ -75,6 +79,8 @@ const server = new ApolloServer({
     };
   }
 });
+
+debug('starting server..')
 
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node -r node_modules/dotenv/config src/index.js",
+    "start": "babel-node -r node_modules/dotenv/config src/index.js",
+    "startw": "nodemon --exec babel-node -r node_modules/dotenv/config src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,8 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.6.0",
+    "@types/debug": "^4.1.5",
     "apollo-server": "^2.9.3",
     "datasource-sql": "^0.2.0",
+    "debug": "^4.1.1",
     "dotenv": "^8.1.0",
     "graphql": "^14.5.5",
     "graphql-iso-date": "^3.6.1",
