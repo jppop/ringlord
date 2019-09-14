@@ -1,6 +1,8 @@
 import { ApolloServer, gql } from 'apollo-server'
 import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date'
 
+import { ContributorRepository } from './repository/contributors'
+
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
 // your data.
@@ -18,11 +20,6 @@ const typeDefs = gql`
     end: Date
     subcriptionDate: DateTime
     unscriptionDate: DateTime
-  }
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
-    title: String
-    author: String
   }
 
   # The "Query" type is special: it lists all of the available queries that
@@ -62,13 +59,22 @@ const resolvers = {
   Date: GraphQLDate,
   DateTime: GraphQLDateTime,
   Query: {
-    contributors: (obj, args, context, info) => contributors.filter(contributor => args.region == "all" || contributor.region == args.region),
+//    contributors: (_source, {region}) => contributors.filter(contributor => region == "all" || contributor.region == region),
+    contributors: async (_source, { region },  { dataSources }, info) => dataSources.contributors.findContributors(region),
   },
 };
 
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  dataSources: () => {
+    return {
+      contributors: new ContributorRepository(),
+    };
+  }
+});
 
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {
