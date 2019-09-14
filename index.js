@@ -29,7 +29,7 @@ const typeDefs = gql`
   # clients can execute, along with the return type for each. In this
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
-    contributors: [Contributor]
+    contributors(region: String = "all"): [Contributor]
   }
 `;
 
@@ -47,6 +47,12 @@ const contributors = [
     id: "99900000000000002",
     start: "2019-05-01",
     subcriptionDate: "2019-04-22T23:00:00Z",
+  },
+  {
+    region: "998",
+    id: "99800000000000001",
+    start: "2019-05-01",
+    subcriptionDate: "2019-04-22T23:00:00Z",
   }
 ]
 
@@ -56,7 +62,7 @@ const resolvers = {
   Date: GraphQLDate,
   DateTime: GraphQLDateTime,
   Query: {
-    contributors: () => contributors,
+    contributors: (obj, args, context, info) => contributors.filter(contributor => args.region == "all" || contributor.region == args.region),
   },
 };
 
