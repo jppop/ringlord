@@ -86,3 +86,6 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# Babel compiled files
+.compiled
