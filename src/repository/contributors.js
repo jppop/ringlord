@@ -26,6 +26,18 @@ export class ContributorRepository extends SQLDataSource {
       }
       return query;
   }
+
+  findContributor(id) {
+    var query = this.db.withSchema('pgmodrev')
+      .first(
+        { region: 'code_ur' },
+        { id: 'contributor_id' },
+        'start', 'end',
+        {subcriptionDate: 'subscribtion_date'}, {unscriptionDate: 'unsubscribtion_date'})
+      .from('contributor')
+      .where({contributor_id: id});
+      return query;
+  }
 }
 
 

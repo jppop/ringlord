@@ -2,6 +2,7 @@ import { ApolloServer, gql } from 'apollo-server'
 import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date'
 
 import { ContributorRepository } from './repository/contributors'
+import { PersonalDataService } from './repository/personalData'
 
 import { getLogger } from './debugger'
 
@@ -18,12 +19,22 @@ const typeDefs = gql`
 
   # Contributor
   type Contributor {
-    id: ID
-    region: String
+    id: ID!
+    region: String!
     start: Date
     end: Date
     subcriptionDate: DateTime
     unscriptionDate: DateTime
+    personalData: PersonalData
+  }
+
+  # Personal Data
+  type PersonalData {
+    title: String,
+    firstName: String,
+    lastName: String,
+    nir: String,
+    riba: String
   }
 
   # The "Query" type is special: it lists all of the available queries that
@@ -31,31 +42,9 @@ const typeDefs = gql`
   # case, the "books" query returns an array of zero or more Books (defined above).
   type Query {
     contributors(region: String = "all"): [Contributor]
+    contributor(id: String): Contributor
   }
 `;
-
-const contributors = [
-  {
-    region: "999",
-    id: "99900000000000002",
-    start: "2019-05-01",
-    end: "2019-04-17",
-    subcriptionDate: "2019-04-16T23:00:00Z",
-    unscriptionDate: "2019-04-17T08:11:42Z"
-  },
-  {
-    region: "999",
-    id: "99900000000000002",
-    start: "2019-05-01",
-    subcriptionDate: "2019-04-22T23:00:00Z",
-  },
-  {
-    region: "998",
-    id: "99800000000000001",
-    start: "2019-05-01",
-    subcriptionDate: "2019-04-22T23:00:00Z",
-  }
-]
 
 // Resolvers define the technique for fetching the types defined in the
 // schema. This resolver retrieves books from the "books" array above.
@@ -64,8 +53,14 @@ const resolvers = {
   DateTime: GraphQLDateTime,
   Query: {
     //    contributors: (_source, {region}) => contributors.filter(contributor => region == "all" || contributor.region == region),
-    contributors: async (_source, { region }, { dataSources }, info) => dataSources.contributors.findContributors(region),
+    contributors: async (_source, { region }, { dataSources }, _info) => dataSources.contributors.findContributors(region),
+    contributor: async (_source, { id }, { dataSources }, _info) => dataSources.contributors.findContributor(id),
   },
+  Contributor: {
+    personalData(contributor, _, { dataSources }, _info) {
+      return dataSources. personalDataService.getPersonalData(contributor.id);
+    }
+  }
 };
 
 // The ApolloServer constructor requires two parameters: your schema
@@ -76,6 +71,7 @@ const server = new ApolloServer({
   dataSources: () => {
     return {
       contributors: new ContributorRepository(),
+      personalDataService: new PersonalDataService(),
     };
   }
 });

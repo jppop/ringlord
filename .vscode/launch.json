@@ -17,10 +17,15 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Apollo",
-      "program": "${workspaceFolder}/src/index.js",
+      "program": "${workspaceFolder}/src/server.js",
       "outFiles": [
         "${workspaceFolder}/.compiled/**/*.js"
-      ]
+      ],
+      "runtimeArgs": [
+        "-r",
+        "dotenv/config"
+      ],
+      "env": {"DEBUG": "ringlord"}
     }
   ]
 }

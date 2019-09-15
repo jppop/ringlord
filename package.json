@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "compile": "babel src --out-dir .compiled --source-maps --watch",
-    "start": "babel-node -r node_modules/dotenv/config src/index.js",
+    "start": "babel-node -r node_modules/dotenv/config src/server.js",
     "tmp": "babel-node -r node_modules/dotenv/config src/tmp.js",
-    "startw": "nodemon --exec babel-node -r node_modules/dotenv/config src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "startw": "nodemon --exec babel-node -r node_modules/dotenv/config src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf ./compiled/*"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "graphql-iso-date": "^3.6.1",
     "knex": "^0.19.4",
     "pg": "^7.12.1",
+    "rimraf": "^3.0.0",
     "soap": "^0.29.0"
   },
   "devDependencies": {

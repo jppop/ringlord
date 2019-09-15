@@ -7,25 +7,22 @@ const options = {
   connection: 'keep-alive'
 }
 
-const soapHeader = {};
-
 export class REIService {
   constructor() {
-    this.client = createClientAsync(endpoint, options).then((client) => {
-      client.addSoapHeader(soapHeader);
+    this.clientPromise = createClientAsync(endpoint, options).then((client) => {
       return Promise.resolve(client);
     });
   }
 
   async findReiIdByContributorId(contributorId) {
-    // this.client.then((client) => console.log(client.describe()));
-    return this.client.then((client) =>
+    // this.clientPromise.then((client) => console.log(client.describe()));
+    return this.clientPromise.then((client) =>
       client.RechercherRedevabiliteParNumCptExterneAsync({numCptExterne: contributorId}));
   }
 
   async findIndividuParIdRedevabilite(reiId) {
-    // this.client.then((client) => console.log(client.describe()));
-    return this.client.then((client) =>
+    // this.clientPromise.then((client) => console.log(client.describe()));
+    return this.clientPromise.then((client) =>
       client.RechercherIndividuParIdRedevabiliteAsync( {idRedevabilite: reiId} ));
   }
 
