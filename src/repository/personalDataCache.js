@@ -3,6 +3,7 @@ import { KeyValueCache } from 'apollo-server-caching';
 
 const defaultOptions = { ttl: 300 };
 
+// FIXME: see https://github.com/dotcypress/apollo-datasource-generic
 export class PersonalDataCache {
 
   constructor(keyValueCache, options) {

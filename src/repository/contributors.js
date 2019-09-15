@@ -6,6 +6,8 @@ const knex = Knex({
   connection: process.env.DATASOURCE,
 });
 
+const limit = 25;
+
 export class ContributorRepository extends SQLDataSource {
 
   constructor() {
@@ -24,7 +26,7 @@ export class ContributorRepository extends SQLDataSource {
       if (region != 'all') {
         query = query.where({code_ur: region});
       }
-      return query;
+      return query.limit(limit);
   }
 
   findContributor(id) {

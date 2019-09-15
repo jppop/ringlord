@@ -30,11 +30,27 @@ const typeDefs = gql`
 
   # Personal Data
   type PersonalData {
-    title: String,
-    firstName: String,
-    lastName: String,
-    nir: String,
+    title: String
+    firstName: String
+    lastName: String
+    nir: String
     riba: String
+    address: Address
+    phones: [Phone]
+  }
+
+  type Address {
+    recipient: String
+    moreRecipient: String
+    building: String
+    street: String
+    postalCode: String
+    city: String
+  }
+
+  type Phone {
+    type: String
+    phone: String
   }
 
   # The "Query" type is special: it lists all of the available queries that

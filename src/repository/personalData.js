@@ -49,21 +49,10 @@ export class PersonalDataService extends DataSource {
   static personalDataFromXI11(xi11Result) {
     if (xi11Result) {
       let { xi02Data } = xi11Result;
-      return {
+      let personalData = {
         contributorId: xi02Data.NumeroExterneCompte,
         siret: xi02Data.Siret,
         riba: xi02Data.RIBA,
-        phones: [{
-          type: xi02Data.ContactRSI.TypeTel1,
-          phone: xi02Data.ContactRSI.Tel1
-        }, {
-          type: xi02Data.ContactRSI.TypeTel2,
-          phone: xi02Data.ContactRSI.Tel2
-        }, {
-          type: 'main',
-          phone: xi02Data.NumeroTelephoniqueCorrespondant
-        }
-        ],
         address: {
           recipient: xi02Data.DenominationPersonne1,
           moreRecipient: xi02Data.ComplementAdresseCorrespondance,
@@ -72,7 +61,21 @@ export class PersonalDataService extends DataSource {
           postalCode: "" + xi02Data.Partie1CodePostalCorrespondance + xi02Data.Partie2CodePostalCorrespondance,
           city: xi02Data.BureauDistributeurCorrespondance
         }
+      };
+      let phones = [];
+      if (xi02Data.ContactRSI.Tel1) {
+        phones.push( {type: xi02Data.ContactRSI.TypeTel1, phone: xi02Data.ContactRSI.Tel1} );
       }
+      if (xi02Data.ContactRSI.Tel2) {
+        phones.push( {type: xi02Data.ContactRSI.TypeTel2, phone: xi02Data.ContactRSI.Tel2} );
+      }
+      if (xi02Data.NumeroTelephoniqueCorrespondant) {
+        phones.push( {type: 'main', phone: xi02Data.NumeroTelephoniqueCorrespondant} );
+      }
+      if (phones.length > 0) {
+        personalData.phones = phones;
+      }
+      return personalData;
     } else {
       return {};
     }
