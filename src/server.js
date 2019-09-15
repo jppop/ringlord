@@ -58,7 +58,7 @@ const resolvers = {
   },
   Contributor: {
     personalData(contributor, _, { dataSources }, _info) {
-      return dataSources. personalDataService.getPersonalData(contributor.id);
+      return dataSources.personalDataService.getPersonalData(contributor.id);
     }
   }
 };

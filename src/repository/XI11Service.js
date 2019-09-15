@@ -1,4 +1,7 @@
-import { createClientAsync } from 'soap';
+import { createClientAsync } from 'soap'
+import { getLogger } from '../debugger'
+
+const debug = getLogger('xi11');
 
 const wsdlUrl = process.env.SERVICE_XI11_WSDL || 'http://localhost:8089/mockWS_XI11_V03?wsdl';
 const endpoint = process.env.SERVICE_XI11_ENDPOINT || 'http://localhost:8089/mockWS_XI11_V03';
@@ -43,6 +46,7 @@ export class XI11Service {
         xi02Data: DonneesXi02,
         xi03Data: DonneesXb03,
       }
+      debug("XI11 result: %o", infoIndividu);
       return Promise.resolve(infoIndividu);
     });
   }

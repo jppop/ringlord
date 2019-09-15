@@ -25,7 +25,7 @@
         "-r",
         "dotenv/config"
       ],
-      "env": {"DEBUG": "ringlord"}
+      "env": {"DEBUG": "ringlord*"}
     }
   ]
 }
